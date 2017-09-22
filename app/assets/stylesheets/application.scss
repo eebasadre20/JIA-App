@@ -1,0 +1,29 @@
+@import "bootstrap";
+
+.registration-form-wrapper {
+    width: 50%;
+    margin:  auto;
+    margin-top: 25px;
+}
+
+.admin-form-wrapper {
+    width: 80%;
+    margin:  auto;
+    margin-top: 25px;
+}
+
+.card-header p {
+    margin-bottom: 0!important;
+}
+
+.edit-icon{
+    padding-right: 5px;
+}
+
+.delete-icon{
+    padding-left: 5px;
+}
+
+.actions-td span:hover {
+    cursor: pointer;
+}

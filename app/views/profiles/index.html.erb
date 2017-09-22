@@ -1,0 +1,169 @@
+<div class="admin-form-wrapper">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-lg-8">
+                        ADMIN - Master
+                    </div>
+                    <div class="col-lg-4">
+                        <p class="text-right"><a href="#">Logout</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="searchInput" aria-describedby="emailHelp" placeholder="Search...">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <b><label>Filter</label></b>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label for="churchFilter">Church</label>
+                            <select class="form-control" id="churchFilter">
+                                        <option>All</option>
+                                        <option>MAIN - CDO</option>
+                                        <option>ACTS - CDO</option>
+                                        <option>YWAV - CDO</option>
+                                        <option>TEENS - CDO</option>
+                                        <option>Iligan</option>
+                                        <option>Igpit</option>
+                                        <option>Laguindingan</option>
+                                        <option>Kibungsod</option>
+                                    </select>
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="categoryFilter">Category</label>
+                            <select class="form-control" id="categoryFilter">
+                                        <option>All</option>
+                                        <option>Aduts</option>
+                                        <option>Kids</option>
+                                    </select>
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="paymentStatusFilter">Payment Status</label>
+                            <select class="form-control" id="paymentStatusFilter">
+                                        <option>All</option>
+                                        <option>Paid</option>
+                                        <option>Partial</option>
+                                        <option>Unpaid</option>
+                                    </select>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <hr>
+                <div class="table-wrapper">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Church</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Middle Name</th>
+                                <th>Category</th>
+                                <th>Event</th>
+                                <th>Amount paid</th>
+                                <th>Balance</th>
+                                <th>Remarks</th>
+                                <th>Actions</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <% @profiles.each do |profile| %>
+                            <tr>
+                              <td><%= profile.church.upcase_name %></td>
+                              <td><%= profile.firstname %></td>
+                              <td><%= profile.lastname %></td>
+                              <td><%= profile.middlename %></td>
+                              <td><%= profile.category.name %></td>
+                              <td><%= profile.events.first.try(:name) %></td>
+                              <td><%= profile.user_events.first.try(:payment) %></td>
+                              <td class="<%= profile.user_events.first.try(:status) === 'unpaid' ? 'text-danger' : 'text-success' %>"><%= profile.user_events.first.try(:status) %></td>
+                              <td><%= profile.user_events.first.try(:balance) %></td>
+                              <td class="actions-td text-center">
+                                <%= link_to edit_profile_path(profile) do | link | %>
+                                  <i class="fa fa-pencil" aria-hidden="true"></i>Edit
+                                <% end %>
+                                  |
+                                <%= link_to profile, method: :delete, data: { confirm: 'Are you sure?' } do | link | %>
+                                  <i class="fa fa-trash" aria-hidden="true"></i>Delete
+                                <% end %>
+                                </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <form>
+            </form>
+        </div>
+
+
+        <!-- MODALS -->
+        <!-- MODAL UPDATE -->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Edit</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="remarksSelect">Remarks</label>
+                            <select class="form-control" id="remarksSelect">
+                                    <option>Paid</option>
+                                    <option>Partial</option>
+                                    <option>Unpaid</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                                <label for="amountPaid">Amount Paid</label>
+                                <input type="number" class="form-control" id="amountPaid" placeholder="">
+                            </div>
+                        <div class="form-group">
+                            <label for="churchSelect">Church</label>
+                            <select class="form-control" id="churchSelect">
+                                <option>Cagayan de Oro</option>
+                                <option>Iligan</option>
+                                <option>Igpit</option>
+                                <option>Laguindingan</option>
+                                <option>Kibungsod</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cellLeaderSelect">Cell Leader</label>
+                            <select class="form-control" id="cellLeaderSelect">
+                                                  
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname">First name</label>
+                            <input type="text" class="form-control" id="firstname" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Last name</label>
+                            <input type="text" class="form-control" id="lastname" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="middlename">Middle name</label>
+                            <input type="text" class="form-control" id="middlename" placeholder="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>

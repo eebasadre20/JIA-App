@@ -1,0 +1,63 @@
+<div class="card-body">
+  <%= form_with(model: profile, local: true) do |form| %>
+    <% if profile.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+
+        <ul>
+        <% profile.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.fields_for :user_events do | user_event_field | %>
+        <div class="form-group">
+          <%= user_event_field.label :event %>
+          <%= user_event_field.collection_select :event_id, Event.all, :id, :name, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%#= user_event_field.label :payment %>
+          <%#= user_event_field.text_field :payment, class: "form-control" %>
+        </div>
+      <% end %>
+  </div>
+
+  <div class="form-group">
+      <%= form.label :category %>
+      <%= form.collection_select :category_id, Category.all, :id, :name, {prompt: "Select a category"}, {class: "form-control"} %>
+  </div>
+
+  <div class="form-group">
+      <%= form.label :church %>
+      <%= form.collection_select :church_id, Church.all, :id, :upcase_name, {prompt: "Select a church"}, {class: "form-control"} %>
+  </div>
+
+    <div class="form-group">
+      <%= form.label :firstname %>
+      <%= form.text_field :firstname, id: :profile_firstname, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :lastname %>
+      <%= form.text_field :lastname, id: :profile_lastname, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :middlename %>
+      <%= form.text_field :middlename, id: :profile_middlename, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%#= form.label :admin_id %>
+      <%#= form.text_field :admin_id, id: :profile_admin_id %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit 'Register', class: "btn btn-primary w-100" %>
+    </div>
+  <% end %>
+</div>
