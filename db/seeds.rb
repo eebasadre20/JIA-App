@@ -68,14 +68,14 @@ events = [
   }
 ]
 
-# churches.each do | church |
-#   Church.create( church )
-# end
+churches.each do | church |
+  Church.create( church )
+end
 
 categories.each do | category |
   Category.create( category )
 end
 
-# events.each do | event |
-#   Event.create( event )
-# end
+events.each do | event |
+  Event.create( event )
+end
