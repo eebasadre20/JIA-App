@@ -36,6 +36,11 @@
       <%= form.collection_select :church_id, Church.all, :id, :upcase_name, {prompt: "Select a church"}, {class: "form-control"} %>
   </div>
 
+  <div class="form-group">
+    <%= form.label :cell_leader %>
+    <%= form.text_field :cell_leader, id: :profile_cell_leader, class: "form-control" %>
+  </div>
+
     <div class="form-group">
       <%= form.label :firstname %>
       <%= form.text_field :firstname, id: :profile_firstname, class: "form-control" %>

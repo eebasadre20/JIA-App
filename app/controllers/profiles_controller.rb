@@ -30,7 +30,7 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.save
-        format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
+        format.html { redirect_to @profile, notice: 'Successfully registered. See you in 28th JIA Anniversary.' }
         format.json { render :show, status: :created, location: @profile }
       else
         format.html { render :new }
@@ -71,6 +71,6 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:firstname, :lastname, :middlename, :admin_id, :category_id, :church_id, user_events_attributes: [:id, :profile_id, :event_id, :payment, :status])
+      params.require(:profile).permit(:firstname, :lastname, :middlename, :cell_leader, :admin_id, :category_id, :church_id, user_events_attributes: [:id, :profile_id, :event_id, :payment, :status])
     end
 end
