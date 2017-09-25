@@ -12,19 +12,19 @@
       </div>
     <% end %>
 
-    <div class="form-group">
-      <%= form.fields_for :user_events do | user_event_field | %>
-        <div class="form-group">
-          <%= user_event_field.label :event %>
-          <%= user_event_field.collection_select :event_id, Event.all, :id, :name, class: "form-control" %>
-        </div>
+  #   <div class="form-group">
+  #     <%= form.fields_for :user_events do | user_event_field | %>
+  #       <div class="form-group">
+  #         <%= user_event_field.label :event %>
+  #         <%= user_event_field.collection_select :event_id, Event.all, :id, :name, class: "form-control" %>
+  #       </div>
 
-        <div class="form-group">
-          <%#= user_event_field.label :payment %>
-          <%#= user_event_field.text_field :payment, class: "form-control" %>
-        </div>
-      <% end %>
-  </div>
+  #       <div class="form-group">
+  #         <%#= user_event_field.label :payment %>
+  #         <%#= user_event_field.text_field :payment, class: "form-control" %>
+  #       </div>
+  #     <% end %>
+  # </div>
 
   <div class="form-group">
       <%= form.label :category %>
