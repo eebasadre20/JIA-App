@@ -12,6 +12,13 @@ class UserEvent < ApplicationRecord
 
   def status
     super
-    balance === 0 ? "paid" : "unpaid"
+
+    return 'unpaid' if payment === 0.0
+
+    if balance === 0 || balance === 0.0
+      "paid"
+    else
+      "partial"
+    end
   end
 end

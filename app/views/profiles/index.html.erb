@@ -3,10 +3,14 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-lg-8">
-                        ADMIN - Master
+                        <%= current_admin.church.name.upcase %> - ADMIN
                     </div>
                     <div class="col-lg-4">
-                        <p class="text-right"><a href="#">Logout</a></p>
+                        <% if admin_signed_in? %>
+                            <p class="text-right">
+                              <%= link_to('Logout', destroy_admin_session_path, method: :delete) %>        
+                            </p>
+                        <% end %>
                     </div>
                 </div>
             </div>
@@ -67,7 +71,7 @@
                                 <th>Last Name</th>
                                 <th>Middle Name</th>
                                 <th>Category</th>
-                                <th>Event</th>
+                                <th>Cell leader</th>
                                 <th>Amount paid</th>
                                 <th>Balance</th>
                                 <th>Remarks</th>
@@ -83,10 +87,12 @@
                               <td><%= profile.lastname %></td>
                               <td><%= profile.middlename %></td>
                               <td><%= profile.category.name %></td>
-                              <td><%= profile.events.first.try(:name) %></td>
-                              <td><%= profile.user_events.first.try(:payment) %></td>
-                              <td class="<%= profile.user_events.first.try(:status) === 'unpaid' ? 'text-danger' : 'text-success' %>"><%= profile.user_events.first.try(:status) %></td>
-                              <td><%= profile.user_events.first.try(:balance) %></td>
+                              <td><%= profile.cell_leader %></td>
+                              <td><%= profile.payment %></td>
+                              <td><%= profile.balance %></td>
+                              <td class="<%= payment_status( profile.status ) %>">
+                                    <%= profile.status %>
+                                </td>
                               <td class="actions-td text-center">
                                 <%= link_to edit_profile_path(profile) do | link | %>
                                   <i class="fa fa-pencil" aria-hidden="true"></i>Edit

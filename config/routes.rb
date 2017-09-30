@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
-  resources :profiles
-  root to: 'profiles#new'
   devise_for :admins
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  authenticated :admin do
+    resources :profiles, only: [:index, :update, :edit, :destroy]
+    root 'profiles#index', as: :authenticated_root
+  end
+
+  resources :profiles, only: [:new, :create, :show]
+  root 'profiles#new'
 end

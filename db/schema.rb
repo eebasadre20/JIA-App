@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170924143557) do
+ActiveRecord::Schema.define(version: 20170930015849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,8 +28,13 @@ ActiveRecord::Schema.define(version: 20170924143557) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "church_id"
+    t.string "role", default: ""
+    t.string "username"
+    t.index ["church_id"], name: "index_admins_on_church_id"
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_admins_on_username", unique: true
   end
 
   create_table "categories", force: :cascade do |t|
@@ -71,6 +76,8 @@ ActiveRecord::Schema.define(version: 20170924143557) do
     t.bigint "church_id"
     t.bigint "category_id"
     t.string "cell_leader"
+    t.decimal "payment", default: "0.0"
+    t.string "status", default: "unpaid"
     t.index ["category_id"], name: "index_profiles_on_category_id"
     t.index ["church_id"], name: "index_profiles_on_church_id"
   end
@@ -86,6 +93,7 @@ ActiveRecord::Schema.define(version: 20170924143557) do
     t.index ["profile_id"], name: "index_user_events_on_profile_id"
   end
 
+  add_foreign_key "admins", "churches"
   add_foreign_key "profiles", "categories"
   add_foreign_key "profiles", "churches"
   add_foreign_key "user_events", "events"

@@ -1,10 +1,33 @@
 class ProfilesController < ApplicationController
+  before_action :authenticate_admin!, except: [:show, :new, :create]
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
-
+  
   # GET /profiles
   # GET /profiles.json
   def index
-    @profiles = Profile.includes([:user_events, :events]).all
+    if current_admin.role == 'jia.super.admin'
+      @profiles = Profile.all.order( created_at: 'DESC' )
+    elsif current_admin.role == 'jia.cdo.super.admin'
+      @profiles = Profile.where( church_id: [1,2,3,4] ).order( created_at: 'DESC' )
+    elsif current_admin.role == 'jia.cdo.main.super.admin'
+      @profiles = Profile.where( church_id: 1 ).order( created_at: 'DESC' )
+    elsif current_admin.role == 'acts.super.admin'
+      @profiles = Profile.where( church_id: 2 ).order( created_at: 'DESC' )
+    elsif current_admin.role == 'ywav.super.admin'
+      @profiles = Profile.where( church_id: 3 ).order( created_at: 'DESC' )
+    elsif current_admin.role == 'jtc.super.admin'
+      @profiles = Profile.where( church_id: 4 ).order( created_at: 'DESC' )
+    elsif current_admin.role == 'iligan.super.admin'
+      @profiles = Profile.where( church_id: 5 ).order( created_at: 'DESC' )
+    elsif current_admin.role == 'laguindingan.super.admin'
+      @profiles = Profile.where( church_id: 6 ).order( created_at: 'DESC' )
+    elsif current_admin.role == 'igpit.super.admin'
+      @profiles = Profile.where( church_id: 7 ).order( created_at: 'DESC' )
+    elsif current_admin.role == 'agora.super.admin'
+      @profiles = Profile.where( church_id: 8 ).order( created_at: 'DESC' )
+    elsif current_admin.role == 'kibungsod.super.admin'
+      @profiles = Profile.where( church_id: 9 ).order( created_at: 'DESC' )
+    end
   end
 
   # GET /profiles/1
@@ -31,7 +54,7 @@ class ProfilesController < ApplicationController
     respond_to do |format|
       if @profile.save
         format.html { redirect_to @profile, notice: 'Successfully registered. See you in 28th JIA Anniversary.' }
-        format.json { render :show, status: :created, location: @profile }
+        format.json { render :new, status: :created, location: @profile }
       else
         format.html { render :new }
         format.json { render json: @profile.errors, status: :unprocessable_entity }
@@ -44,8 +67,8 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
-        format.json { render :show, status: :ok, location: @profile }
+        format.html { redirect_to profiles_path, notice: 'Profile was successfully updated.' }
+        format.json { render :index, status: :ok, location: @profile }
       else
         format.html { render :edit }
         format.json { render json: @profile.errors, status: :unprocessable_entity }
@@ -66,11 +89,11 @@ class ProfilesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_profile
-      @profile = Profile.find(params[:id])
+      @profile = Profile.find_by( id: params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:firstname, :lastname, :middlename, :cell_leader, :admin_id, :category_id, :church_id, user_events_attributes: [:id, :profile_id, :event_id, :payment, :status])
+      params.require(:profile).permit(:firstname, :lastname, :middlename, :cell_leader, :admin_id, :category_id, :church_id, :payment, :status)
     end
 end
