@@ -8,6 +8,11 @@ class Profile < ApplicationRecord
   accepts_nested_attributes_for :events
   accepts_nested_attributes_for :user_events
 
+  scope :total_unpaid, -> { where( status: 'unpaid' ).count }
+  scope :total_paid, -> { where( status: 'paid' ).count } 
+  scope :total_partial, -> { where( status: 'partial' ).count } 
+  scope :total_payment, -> { Profile.sum(:payment) }
+ 
   def balance
     700 - payment
   end

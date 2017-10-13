@@ -66,6 +66,25 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th>Registered</th>
+                                <th>Paid Attendee</th>
+                                <th>Partially Paid Attendee</th>
+                                <th>Unpaid Attendee</th>
+                                <th>Total Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                              <td><%= @profiles.count %></td>
+                              <td><%= @profiles.total_paid %></td>
+                              <td><%= @profiles.total_partial %></td>
+                              <td><%= @profiles.total_unpaid %></td>
+                              <td><%= @profiles.total_payment %></td>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
                                 <th>Church</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
